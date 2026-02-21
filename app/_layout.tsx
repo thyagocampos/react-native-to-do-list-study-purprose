@@ -1,24 +1,16 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import {Button, ScrollView, Text, Image, Alert} from "react-native";
+import logo from '../assets/images/check.png'
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
+export default function RootLayout(){
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    <ScrollView>      
+      <Text>oi mundo!!</Text>      
+      <Image source={logo} />
+      <Text>Minhas tarefas</Text>
+      <Button
+        title="+"
+        onPress={()=> Alert.alert("Oie")}
+      />            
+    </ScrollView>
+  ) 
 }
