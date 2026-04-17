@@ -1,29 +1,41 @@
-import { TextInput, Pressable, ScrollView, Text, Image, Alert, StyleSheet, View, StatusBar, Platform } from "react-native";
+import { TextInput, Pressable, ScrollView, Text, Image, Alert, StyleSheet, View, StatusBar, Platform, FlatList } from "react-native";
 import logo from '../assets/images/check.png'
 import { colors } from "../constantes/color";
+import  Task  from '../components/Task';
 
 export default function RootLayout() {
+  const tasks = [
+    { id: 1, completed: true, text: "Fazer café" },
+    { id: 2, completed: false, text: "Estudar react native" },
+    { id: 3, completed: false, text: "Academia" }
+  ]
+
   return (
-    <View style={style.container}>
-      <ScrollView>
-        <View style={style.textContainer}>
-          <Image source={logo} style={style.image} />
-          <Text style={style.title}>Minhas tarefas</Text>
+    <View style={styles.container}>
+      <View>
+        <View style={styles.textContainer}>
+          <Image source={logo} style={styles} />
+          <Text style={styles.title}>Minhas tarefas</Text>
         </View>
-        <View style={style.rowContainer}>
-          <TextInput style={style.input} />
-          <Pressable onPress={() => Alert.alert("Oie")} 
-            style={({pressed})=> [style.button, {backgroundColor: pressed? "blue" : colors.primary}]}
-            >
-            <Text style={style.buttonText}>+</Text>
+        <View style={styles.rowContainer}>
+          <TextInput style={styles.input} />
+          <Pressable onPress={() => Alert.alert("Oie")}
+            style={({ pressed }) => [styles.button, { backgroundColor: pressed ? "blue" : colors.primary }]}
+          >
+            <Text style={styles.buttonText}>+</Text>
           </Pressable >
         </View>
-      </ScrollView>
+        <FlatList
+          data={tasks}
+          keyExtractor={(item)=>item.id.toString()}
+          renderItem={({ item }) => <Task text={item.text} />}
+        />
+      </View>
     </View>
   )
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
@@ -61,7 +73,7 @@ const style = StyleSheet.create({
   button: {
     width: 40,
     height: 40,
-    borderRadius: 20,    
+    borderRadius: 20,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
